@@ -2,10 +2,13 @@ import os
 import sys
 
 from fastapi import FastAPI
+from fastapi_sqlalchemy import DBSessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 
 from .api.app_status import status_router
+from .external.postgres.db import SQLALCHEMY_DATABASE_URL
+from .api.v1.users.views import user_router
 
 app = FastAPI(
     title="Personal Account V1",
@@ -28,6 +31,7 @@ def create_app():
     logger.configure(**logger_config)
 
     app.include_router(status_router)
+    app.include_router(user_router)
 
     app.add_middleware(
         CORSMiddleware,
@@ -35,6 +39,11 @@ def create_app():
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
+    )
+
+    app.add_middleware(
+        DBSessionMiddleware,
+        db_url=SQLALCHEMY_DATABASE_URL,
     )
 
     return app
