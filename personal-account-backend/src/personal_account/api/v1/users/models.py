@@ -21,6 +21,7 @@ class UserCreate(CoreModel):
     name: constr(min_length=1, regex="^[a-zA-Z-]+$")
     surname: constr(min_length=1, regex="^[a-zA-Z-]+$")
     email: EmailStr
+    password: constr(min_length=8, max_length=64)
 
 
 class UserUpdate(CoreModel):
@@ -36,6 +37,9 @@ class UserPasswordUpdate(CoreModel):
 
 
 class UserInDB(IDModelMixin, DateTimeModelMixin, UserBase):
+    password: constr(min_length=8, max_length=64)
+    salt: str
+
     class Config:
         orm_mode = True
 

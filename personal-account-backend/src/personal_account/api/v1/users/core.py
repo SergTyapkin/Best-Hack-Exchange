@@ -1,4 +1,3 @@
-import imp
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from pydantic import EmailStr
@@ -13,7 +12,7 @@ def get_user_by_email(*, email: EmailStr, db: Session) -> UserInDB:
     if not user_record:
         return
 
-    return UserInDB(**user_record)
+    return UserInDB(**user_record.__dict__)
 
 
 def get_user_by_username(*, username: str, db: Session) -> UserInDB:
@@ -22,7 +21,7 @@ def get_user_by_username(*, username: str, db: Session) -> UserInDB:
     if not user_record:
         return
 
-    return UserInDB(**user_record)
+    return UserInDB(**user_record.__dict__)
 
 
 def register_new_user(*, new_user: UserCreate, db: Session) -> UserInDB:
@@ -38,9 +37,9 @@ def register_new_user(*, new_user: UserCreate, db: Session) -> UserInDB:
             detail="Username is already taken",
         )
 
-    created_user = User(**new_user.dict())
+    created_user = User(**{"salt": "3tg23t234g", **new_user.dict()})
 
     db.add(created_user)
     db.commit()
 
-    return UserInDB(**created_user)
+    return UserInDB(**created_user.__dict__)
