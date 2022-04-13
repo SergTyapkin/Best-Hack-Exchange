@@ -8,18 +8,25 @@ export default class User extends Model {
     login: "",
     password: "",
     email: "",
-    fullname: "",
+    firstName: "",
+    secondName: "",
   }
 
   toNetworkNames = {
     username: "username",
     email: "email",
     password: "password",
-    fullname: "fullname",
+    firstName: "firstName",
+    secondName: "secondName",
   }
 
   set(data) {
     super.set(data);
     this.isLogined = true;
+  }
+
+  constructor() {
+    super();
+    this.setDefault();
   }
 }

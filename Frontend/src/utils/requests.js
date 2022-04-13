@@ -1,15 +1,4 @@
-/**
- * Returns value of a cookie by its name
- *
- * @param {string} name name of a cookie
- * @returns {string} value of a cookie
- */
-export function getCookie(name) {
-    let matches = document.cookie.match(new RegExp(
-      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-}
+import {getCookie} from "./utils";
 
 /**
  * Sends http request with JSON data to a specified url
