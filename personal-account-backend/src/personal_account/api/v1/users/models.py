@@ -1,8 +1,8 @@
-import string
 from typing import Optional
-from pydantic import EmailStr, validator, constr
+from pydantic import EmailStr, constr
 
 from ..base.models.core import CoreModel, IDModelMixin, DateTimeModelMixin
+from .token import AccessToken
 
 
 class UserBase(CoreModel):
@@ -45,5 +45,7 @@ class UserInDB(IDModelMixin, DateTimeModelMixin, UserBase):
 
 
 class UserPublic(IDModelMixin, DateTimeModelMixin, UserBase):
+    access_token: Optional[AccessToken]
+
     class Config:
         orm_mode = True

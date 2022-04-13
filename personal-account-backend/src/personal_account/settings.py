@@ -8,6 +8,13 @@ class Settings(BaseSettings):
     postgres_host: str
     postgres_port: int
 
+    token_expires_in_secs: int = 3600
+    jwt_tokens_aud: str = "auth"
+    jwt_algorithm: str = "HS256"
+    jwt_tokens_prefix: str = "Bearer"
+    token_issuer: str = "best-hack.io"
+    secret_key: str
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

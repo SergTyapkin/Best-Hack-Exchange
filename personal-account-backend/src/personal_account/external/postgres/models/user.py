@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Sequence
+from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from sqlalchemy.sql import func
 
 from ..db import Base
@@ -7,9 +7,7 @@ from ..db import Base
 class User(Base):
     __tablename__ = "user"
 
-    id = Column(
-        Integer, Sequence("user_id_seq"), primary_key=True, index=True, unique=True
-    )
+    id = Column(Integer, autoincrement=True, primary_key=True, index=True, unique=True)
     username = Column(String, unique=True, nullable=False, index=True)
     name = Column(String, nullable=False)
     surname = Column(String, nullable=False)

@@ -1,11 +1,11 @@
 version: '3.8'
 
-services: 
+services:
   postgres-db:
     image: postgres:${POSTGRES_VERSION}
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    environment: 
+    environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -13,12 +13,12 @@ services:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
 
   personal-account-backend:
-    build: 
+    build:
       context: personal-account-backend
-      dockerfile: Dockerfile 
-    command: bash -c "uvicorn src.__main__:app --host ${PERSONAL_ACCOUNT_BACKEND} --port ${PERSONAL_ACCOUNT_PORT} --reload"
+      dockerfile: Dockerfile
+    command: bash -c "alembic upgrade head && uvicorn src.__main__:app --host ${PERSONAL_ACCOUNT_BACKEND} --port ${PERSONAL_ACCOUNT_PORT} --reload"
     ports:
-      - ${PERSONAL_ACCOUNT_PORT}:${PERSONAL_ACCOUNT_PORT}  
+      - ${PERSONAL_ACCOUNT_PORT}:${PERSONAL_ACCOUNT_PORT}
     depends_on:
       - postgres-db
 

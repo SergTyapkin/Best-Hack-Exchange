@@ -1,10 +1,10 @@
-from hashlib import new
 from fastapi import APIRouter, Body, Depends, status
 from sqlalchemy.orm import Session
 
 from .models import UserCreate, UserPublic
 from ....external.postgres.db_utils import get_db
-from .core import register_new_user
+from .token import AccessToken
+from .core import register_new_user, auth_service
 
 user_router = APIRouter(prefix="/user", tags=["user"])
 
@@ -20,4 +20,9 @@ async def register_new_user_view(
 ):
     created_user = register_new_user(new_user=new_user, db=db)
 
-    return created_user
+    access_token = AccessToken(
+        access_token=auth_service.create_access_token(user=created_user),
+        token_type="bearer",
+    )
+
+    return UserPublic(**created_user.dict(), access_token=access_token)

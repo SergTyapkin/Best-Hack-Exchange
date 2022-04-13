@@ -1,5 +1,3 @@
-import dataclasses
-from lib2to3.pytree import Base
 from typing import Optional
 from datetime import datetime
 from pydantic import BaseModel, validator

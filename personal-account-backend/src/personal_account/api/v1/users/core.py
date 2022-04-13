@@ -1,9 +1,14 @@
 from fastapi import HTTPException, status
+from loguru import logger
 from sqlalchemy.orm import Session
 from pydantic import EmailStr
 
 from .models import UserCreate, UserInDB
+from .authentication import AuthService
 from ....external.postgres.models.user import User
+
+
+auth_service = AuthService()
 
 
 def get_user_by_email(*, email: EmailStr, db: Session) -> UserInDB:
@@ -37,9 +42,32 @@ def register_new_user(*, new_user: UserCreate, db: Session) -> UserInDB:
             detail="Username is already taken",
         )
 
-    created_user = User(**{"salt": "3tg23t234g", **new_user.dict()})
+    user = None
 
-    db.add(created_user)
-    db.commit()
+    try:
+        user_password = auth_service.create_hashed_password_and_salt(
+            plain_password=new_user.password
+        )
 
-    return UserInDB(**created_user.__dict__)
+        updated_user_params = new_user.copy(update=user_password.dict())
+
+        created_user = User(**updated_user_params.dict())
+
+        db.add(created_user)
+        db.flush()
+
+        user = UserInDB(**created_user.__dict__)
+
+        db.commit()
+
+    except Exception as exc:
+        logger.error(exc)
+
+        db.rollback()
+
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User isn't created",
+        )
+
+    return user
