@@ -71,3 +71,22 @@ def register_new_user(*, new_user: UserCreate, db: Session) -> UserInDB:
         )
 
     return user
+
+
+def authenticate_user(*, email: EmailStr, password: str, db: Session) -> UserInDB:
+    user = get_user_by_email(email=email, db=db)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="No such user",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    if not auth_service.verify_password(
+        password=password, salt=user.salt, hashed_password=user.password
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return user

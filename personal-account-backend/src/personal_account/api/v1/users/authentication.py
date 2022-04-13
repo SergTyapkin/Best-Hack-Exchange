@@ -30,6 +30,11 @@ class AuthService:
     def hash_password(self, *, password: str, salt: str) -> str:
         return pwd_context.hash(password + salt)
 
+    def verify_password(
+        self, *, password: str, salt: str, hashed_password: str
+    ) -> bool:
+        return pwd_context.verify(password + salt, hashed_password)
+
     def create_access_token(
         self,
         *,

@@ -16,6 +16,7 @@ alembic = "^1.7.7"
 FastAPI-SQLAlchemy = "^0.2.1"
 PyJWT = "^2.3.0"
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+python-multipart = "^0.0.5"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"
