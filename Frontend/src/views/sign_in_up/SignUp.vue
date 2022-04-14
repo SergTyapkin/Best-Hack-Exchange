@@ -1,58 +1,46 @@
-<style lang="stylus">
-logo-size = 40px
-
-.form
-  .logo
-    width logo-size
-    height logo-size
-    margin 20px 0
-</style>
-
 <template>
   <BluredBg></BluredBg>
 
-  <div class="profile-page">
-    <form class="form centered-horizontal" novalidate @submit.prevent="signUp">
-      <img class="logo" src="/Frontend/src/res/favicon.ico" alt="BH Exchange" />
+  <form class="form centered-horizontal" novalidate @submit.prevent="signUp">
+    <img class="logo" src="../../res/logo.svg" alt="BH Exchange" />
 
-      <div class="info-container">
-        <div class="title">Create an account</div>
-      </div>
+    <div class="info-container">
+      <div class="title">Create an account</div>
+    </div>
 
-      <div class="fields-container">
-        <div>
-          <span class="error-text">{{ errors.firstName }}</span>
-          <input type="text" autocomplete="on" placeholder=" " v-model="user.firstName">
-          <label>First Name</label>
-        </div>
-        <div>
-          <span class="error-text">{{ errors.secondName }}</span>
-          <input type="text" autocomplete="on" placeholder=" " v-model="user.secondName">
-          <label>Last Name</label>
-        </div>
-        <div>
-          <span class="error-text">{{ errors.email }}</span>
-          <input type="email" autocomplete="on" placeholder=" " v-model="user.email">
-          <label>Email</label>
-        </div>
-        <div>
-          <span class="error-text">{{ errors.password }}</span>
-          <input type="password" autocomplete="on" placeholder=" " v-model="user.password">
-          <label>Password</label>
-        </div>
-        <div>
-          <span class="error-text">{{ errors.passwordConfirm }}</span>
-          <input type="password" autocomplete="on" placeholder=" " v-model="passwordConfirm">
-          <label>Password confirm</label>
-        </div>
+    <div class="fields-container">
+      <div>
+        <span class="error-text">{{ errors.firstName }}</span>
+        <input type="text" autocomplete="on" placeholder=" " v-model="user.firstName">
+        <label>First Name</label>
       </div>
+      <div>
+        <span class="error-text">{{ errors.secondName }}</span>
+        <input type="text" autocomplete="on" placeholder=" " v-model="user.secondName">
+        <label>Last Name</label>
+      </div>
+      <div>
+        <span class="error-text">{{ errors.email }}</span>
+        <input type="email" autocomplete="on" placeholder=" " v-model="user.email">
+        <label>Email</label>
+      </div>
+      <div>
+        <span class="error-text">{{ errors.password }}</span>
+        <input type="password" autocomplete="on" placeholder=" " v-model="user.password">
+        <label>Password</label>
+      </div>
+      <div>
+        <span class="error-text">{{ errors.passwordConfirm }}</span>
+        <input type="password" autocomplete="on" placeholder=" " v-model="passwordConfirm">
+        <label>Password confirm</label>
+      </div>
+    </div>
 
-      <div class="submit-container">
-        <input type="submit" value="Sign up">
-        <div class="text info">Already have an account? <router-link to="/signin">Tap to log in.</router-link></div>
-      </div>
-    </form>
-  </div>
+    <div class="submit-container">
+      <input type="submit" value="Sign up">
+      <div class="text info">Already have an account? <router-link to="/signin">Tap to log in.</router-link></div>
+    </div>
+  </form>
 </template>
 
 
@@ -69,7 +57,6 @@ export default {
       passwordConfirm: '',
 
       enabled: true,
-
       errors: {}
     }
   },

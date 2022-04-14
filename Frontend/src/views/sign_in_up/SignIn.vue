@@ -1,43 +1,40 @@
 <style lang="stylus">
-logo-size = 40px
+logo-size = 140px
 
 .form
   .logo
     width logo-size
-    height logo-size
-    margin 20px 0
+    margin-bottom 20px
 </style>
 
 <template>
   <BluredBg></BluredBg>
 
-  <div class="profile-page">
-    <form class="form centered-horizontal" novalidate @submit.prevent="signIn">
-      <img class="logo" src="/Frontend/src/res/favicon.ico" alt="BH Exchange" />
+  <form class="form centered-horizontal" novalidate @submit.prevent="signIn">
+    <img class="logo" src="../../res/logo.svg" alt="BH Exchange" />
 
-      <div class="info-container">
-        <div class="title">Sign in to BH Exchange</div>
-      </div>
+    <div class="info-container">
+      <div class="title">Sign in</div>
+    </div>
 
-      <div class="fields-container">
-        <div>
-          <span class="error-text">{{ errors.email }}</span>
-          <input type="email" autocomplete="on" placeholder=" " v-model="email">
-          <label>Email</label>
-        </div>
-        <div>
-          <span class="error-text">{{ errors.password }}</span>
-          <input type="password" autocomplete="on" placeholder=" " v-model="password">
-          <label>Password</label>
-        </div>
+    <div class="fields-container">
+      <div>
+        <span class="error-text">{{ errors.email }}</span>
+        <input type="email" autocomplete="on" placeholder=" " v-model="email">
+        <label>Email</label>
       </div>
+      <div>
+        <span class="error-text">{{ errors.password }}</span>
+        <input type="password" autocomplete="on" placeholder=" " v-model="password">
+        <label>Password</label>
+      </div>
+    </div>
 
-      <div class="submit-container">
-        <input type="submit" value="Sign in">
-        <div class="text info">Don’t have an account?<router-link to="/signup"> Tap here to sign in.</router-link></div>
-      </div>
-    </form>
-  </div>
+    <div class="submit-container">
+      <input type="submit" value="Sign in">
+      <div class="text info">Don’t have an account?<router-link to="/signup"> Tap here to sign in.</router-link></div>
+    </div>
+  </form>
 </template>
 
 
@@ -53,7 +50,6 @@ export default {
       password: '',
 
       enabled: true,
-
       errors: {}
     }
   },

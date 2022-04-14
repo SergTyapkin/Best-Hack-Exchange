@@ -33,7 +33,8 @@ height = 200px
       position absolute
       inset 0
       border-radius 50%
-      border 2px solid textColor3
+      border 2px solid white
+      cursor pointer
     .icon:hover
       opacity 1
 
@@ -67,8 +68,8 @@ height = 200px
         <img class="search" src="../res/search.svg" alt="" />
       </div>
 
-      <div class="icon"><img src="../res/bell.svg" alt="" /></div>
-      <div class="icon"><img src="../res/profile.svg" alt="" /></div>
+      <router-link to="#" class="icon"><img src="../res/bell.svg" alt="" /></router-link>
+      <router-link to="/profile" class="icon"><img src="../res/profile.svg" alt="" /></router-link>
     </div>
   </div>
 </template>

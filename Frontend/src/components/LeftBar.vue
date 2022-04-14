@@ -21,16 +21,16 @@ borderColor = textColor5
   img
     width 30px
     margin 15px
-    stroke red
     opacity 0.6
     transition opacity 0.2s ease
+    cursor pointer
   img:hover
     opacity 1
 </style>
 
 <template>
   <div class="leftbar">
-    <img src="../res/profile.svg" alt="" />
+    <router-link to="/profile"><img src="../res/profile.svg" alt="" /></router-link>
     <img src="../res/4_rectangles.svg" alt="" />
     <img src="../res/wallet.svg" alt="" />
     <img src="../res/message.svg" alt="" />

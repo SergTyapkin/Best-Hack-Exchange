@@ -1,19 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import Home from './views/Home.vue';
 import SignIn from "./views/sign_in_up/SignIn.vue";
 import SignUp from "./views/sign_in_up/SignUp.vue";
-import Profile from "./views/sign_in_up/Profile.vue";
+import Profile from "./views/Main.vue";
 import Page404 from './views/Page404.vue';
 
 export default function createVueRouter(Store) {
     const routes = [
-        {path: '/', component: Home},
+        {path: '/', redirect: '/profile'},
         {path: '/signin', component: SignIn, meta: {noLoginRequired: true}},
         {path: '/signup', component: SignUp, meta: {noLoginRequired: true}},
         {path: '/profile', component: Profile, meta: {loginRequired: false}},
         {path: '/:pathMatch(.*)*', component: Page404},
     ];
+    const loginRedirect = '/signin';
+    const noLoginRedirect = '/profile';
 
     const Router = createRouter({
         history: createWebHistory(),
@@ -33,7 +34,7 @@ export default function createVueRouter(Store) {
                 return;
             }
             next({
-                path: '/signin',
+                path: loginRedirect,
                 params: {nextUrl: to.fullPath}
             });
         } else if (to.matched.some(record => record.meta.noLoginRequired)) {
@@ -42,7 +43,7 @@ export default function createVueRouter(Store) {
                 return;
             }
             next({
-                path: '/profile',
+                path: noLoginRedirect,
                 params: {nextUrl: to.fullPath}
             });
         }

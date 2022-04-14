@@ -10,6 +10,9 @@ export default class User extends Model {
     email: "",
     firstName: "",
     secondName: "",
+    address: "",
+    phone: "",
+    birthdate: "",
   }
 
   toNetworkNames = {
