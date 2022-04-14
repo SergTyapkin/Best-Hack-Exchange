@@ -22,9 +22,16 @@ services:
     depends_on:
       - postgres-db
 
-networks:
   frontend:
-  backend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+      args:
+        - API_PORT_ARG=${PERSONAL_ACCOUNT_PORT}
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:

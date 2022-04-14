@@ -24,9 +24,9 @@ RUN yarn dist
 
 # -----------------------
 # run dist files on nginx
-RUN mkdir -p /etc/nginx/sites-available
-RUN mkdir -p /etc/nginx/sites-enabled
+#RUN mkdir -p /etc/nginx/sites-available
+#RUN mkdir -p /etc/nginx/sites-enabled
 
 COPY nginx/nginx.conf /etc/nginx/
-COPY nginx/frontend.conf /etc/nginx/sites-available/
-RUN ln -s /etc/nginx/sites-available/frontend.conf /etc/nginx/sites-enabled/
+#COPY nginx/frontend.conf /etc/nginx/sites-available/
+#RUN ln -s /etc/nginx/sites-available/frontend.conf /etc/nginx/sites-enabled/
