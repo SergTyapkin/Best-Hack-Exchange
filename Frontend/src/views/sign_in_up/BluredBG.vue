@@ -1,7 +1,9 @@
 <style lang="stylus">
 svg
   position fixed
+  width 1440px
   z-index -1
+  left calc((100% - 1440px) / 2)
 </style>
 
 <template>

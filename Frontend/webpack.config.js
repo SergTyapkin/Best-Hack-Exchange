@@ -17,11 +17,7 @@ module.exports = {
             template: 'src/index.html',
             favicon: 'src/res/favicon.ico'
         }),
-        new VueLoaderPlugin(),
-        // new webpack.DefinePlugin({
-        //     BUILD_TIMESTAMP: Date.now(),
-        //     VERSION: JSON.stringify(require('./package.json').version)
-        // })
+        new VueLoaderPlugin()
     ],
     devServer: {
         port: 9000,
@@ -34,7 +30,7 @@ module.exports = {
                         return `/${path[path.length - 1]}`
                     }
                 },
-                { from: /^\/#/, to: 'public/index.html' },
+                { from: /^\/#/, to: '/index.html' },
             ]
         },
         proxy: {
@@ -64,8 +60,8 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(png|ico|svg)$/,
-                loader: 'file-loader'
+                test: /\.(png|svg|jpg|jpeg|gif)$/,
+                loader: 'file-loader',
             },
             {
                 test: /\.worker.js$/,
