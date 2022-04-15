@@ -32,9 +32,10 @@ import LeftBar from '../components/LeftBar.vue';
 import TopBar from '../components/TopBar.vue';
 import BluredBG from "./sign_in_up/BluredBG.vue";
 import Profile from "./Profile.vue";
+import Dashboard from "./Dashboard.vue";
 
 export default {
-  components: {BluredBG, LeftBar, TopBar, Profile},
+  components: {BluredBG, LeftBar, TopBar, Profile, Dashboard},
 
   data() {
     return {

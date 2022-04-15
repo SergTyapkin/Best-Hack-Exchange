@@ -1,4 +1,4 @@
-<style lang="stylus">
+<style lang="stylus" scoped>
   @require '../styles/constants.styl'
 
   indent = 15px

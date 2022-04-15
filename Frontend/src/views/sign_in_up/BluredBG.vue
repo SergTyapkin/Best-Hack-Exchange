@@ -1,4 +1,4 @@
-<style lang="stylus">
+<style lang="stylus" scoped>
 svg
   position fixed
   width 1440px

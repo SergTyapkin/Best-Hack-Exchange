@@ -81,6 +81,8 @@ borderColorInputs = textColor5
 
 <template>
   <div class="profile-page">
+    <div class="page-name">Your profile</div>
+
     <div class="photo-column">
       <div class="photo">
         <img src="../res/profile_thin.svg" alt="Photo">
@@ -99,8 +101,6 @@ borderColorInputs = textColor5
         <button @click="changeData">Submit</button>
       </div>
     </div>
-
-    <div class="page-name">Your profile</div>
   </div>
 </template>
 
@@ -123,6 +123,7 @@ export default {
   },
 
   methods: {
+    // TODO: Нормальная проверка всех полей
     async __signInAction() {
       if (this.email.length === 0) {
         this.errors.email = 'Логин не может быть пустым';

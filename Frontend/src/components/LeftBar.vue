@@ -24,17 +24,18 @@ borderColor = textColor5
     opacity 0.6
     transition opacity 0.2s ease
     cursor pointer
-  img:hover
-    opacity 1
+  > *:hover
+    img
+      opacity 1
 </style>
 
 <template>
   <div class="leftbar">
     <router-link to="/profile"><img src="../res/profile.svg" alt="" /></router-link>
-    <img src="../res/4_rectangles.svg" alt="" />
-    <img src="../res/wallet.svg" alt="" />
-    <img src="../res/message.svg" alt="" />
-    <img src="../res/trade.svg" alt="" />
-    <img src="../res/settings.svg" alt="" />
+    <router-link to="/dashboard"><img src="../res/4_rectangles.svg" alt="" /></router-link>
+    <router-link to="#"><img src="../res/wallet.svg" alt="" /></router-link>
+    <router-link to="#"><img src="../res/message.svg" alt="" /></router-link>
+    <router-link to="#"><img src="../res/trade.svg" alt="" /></router-link>
+    <router-link to="#"><img src="../res/settings.svg" alt="" /></router-link>
   </div>
 </template>
