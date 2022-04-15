@@ -1,0 +1,57 @@
+# build static files with yarn
+FROM nginx
+
+ENV API_PORT=8080
+
+# copy all files to /front
+WORKDIR /front
+COPY . .
+
+# install npm
+RUN apt update && apt install -y npm
+#RUN npm install --global yarn
+
+# install yarn
+RUN apt update && apt install -y gnupg
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt update && apt install -y yarn
+
+# build static files
+RUN yarn
+RUN yarn dist
+
+# -----------------------
+# run dist files on nginx
+#RUN mkdir -p /etc/nginx/sites-available
+#RUN mkdir -p /etc/nginx/sites-enabled
+
+COPY nginx/nginx.conf /etc/nginx/
+#COPY nginx/frontend.conf /etc/nginx/sites-available/
+#RUN ln -s /etc/nginx/sites-available/frontend.conf /etc/nginx/sites-enabled/
+
+
+#--------BACKEND---------
+RUN apt update && apt install -y python3
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /code
+
+RUN apt-get update \
+    && apt-get -y install netcat gcc \
+    && apt-get clean
+
+ENV PIP_DISABLE_PIP_VERSION_CHECK=on
+
+RUN pip install --upgrade pip
+RUN pip install poetry
+RUN poetry config virtualenvs.create false
+
+COPY .env pyproject.toml poetry.lock /code
+RUN poetry install --no-dev
+
+COPY src /code/src
+
+# CMD ["uvicorn", "src.__main__:app", "--host", "0.0.0.0", "--port", "8080"]

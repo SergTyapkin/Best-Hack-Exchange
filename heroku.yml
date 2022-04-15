@@ -1,0 +1,8 @@
+setup:
+ addons:
+   - plan: heroku-postgresql
+build:
+  docker:
+    web: ./Dockerfile.heroku
+run:
+  web: bash -c "alembic upgrade head && uvicorn src.__main__:app --host ${PERSONAL_ACCOUNT_BACKEND} --port ${PERSONAL_ACCOUNT_PORT} --reload"
