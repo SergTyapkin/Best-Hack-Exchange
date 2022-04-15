@@ -1,4 +1,4 @@
-<style lang="stylus" scoped>
+<style lang="stylus">
   @require '../styles/constants.styl'
 
   indent = 15px
@@ -22,6 +22,7 @@
     right indent
     width messageWidth
     z-index 1000
+    font-size 14px
     .popup-message
       box-sizing content-box
       overflow hidden

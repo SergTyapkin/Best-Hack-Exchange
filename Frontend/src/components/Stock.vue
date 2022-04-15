@@ -21,6 +21,10 @@
     border 1px solid borderColor
     border-radius radius
     background bg
+    cursor pointer
+    transition background 0.2s ease
+  .stock:hover
+    background mix(bg, white, 80%)
   .stock.selected
     background bgSelected
 
@@ -96,7 +100,7 @@
         <span class="name">{{ name }}</span>
       </div>
       <div :class="'perc-row ' + (isIncrease ? 'increase' : 'decrease')">
-        <span class="perc">{{ isIncrease ? '+' : '-'}}{{ percents }}%</span>
+        <span class="perc">{{ isIncrease ? '+' : '-'}}{{ percentsAbs }}%</span>
         <svg v-if="isIncrease" viewBox="0 0 7 6" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M4.12165 3.81177L3.29433 4.63909C2.98972 4.9437 2.49585 4.9437 2.19124 4.63909C1.88663 4.33448 1.88663 3.84061 2.19124 3.536L3.01855 2.70868L0.840088 0.530212H6.30011V5.99024L4.12165 3.81177Z"/></svg>
         <svg v-else viewBox="0 0 7 6" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M3.95307 2.70861L3.12575 1.8813C2.82114 1.57669 2.32727 1.57669 2.02266 1.8813C1.71805 2.18591 1.71805 2.67978 2.02266 2.98439L2.84998 3.81171L0.671509 5.99017H6.13153V0.530148L3.95307 2.70861Z" fill="#E3507A"/></svg>
       </div>
@@ -108,14 +112,14 @@
   export default {
     data() {
       return {
-        messages: [],
+        isIncrease: this.percents >= 0,
+        percentsAbs: Math.abs(this.percents),
       };
     },
 
     props: {
       value: Number,
       name: String,
-      isIncrease: Boolean,
       percents: Number,
       isSelected: false,
     }

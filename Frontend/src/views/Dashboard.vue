@@ -61,7 +61,7 @@ borderColorInputs = textColor5
       <div class="stocks-row">
         <div class="title">STOCKS</div>
         <div class="stocks">
-          <Stock v-for="stock in stocks"
+          <Stock v-for="(stock, idx) in stocks" @click="selectStock(idx)"
               :name="stock.name"
               :value="stock.value"
               :is-increase="stock.isIncrease"
@@ -89,9 +89,8 @@ borderColorInputs = textColor5
 
 
 <script>
-import User from "../models/user";
 import Stock from "../components/Stock.vue";
-import BluredBG from "./sign_in_up/BluredBG.vue";
+import BluredBG from "../components/BluredBG.vue";
 import Interface from "./Interface.vue";
 
 export default {
@@ -99,35 +98,12 @@ export default {
 
   data() {
     return {
-      user: new User(),
+      selectedStockIdx: 0,
 
-      enabled: true,
-      errors: {},
-
-      stocks: [
-        {
-          name: 'ARP',
-          value: 1.9678,
-          isIncrease: true,
-          percents: 12.5,
-          isSelected: true,
-        },
-        {
-          name: 'ETH',
-          value: 23.234,
-          isIncrease: false,
-          percents: 5.235,
-        },
-        {
-          name: 'LTC',
-          value: 380.234,
-          isIncrease: true,
-          percents: 39.69,
-        },
-      ],
+      stocks: [],
 
 
-      height: window.innerHeight - 382, // fixme: убрать эту дичь и сделать 100%
+      height: window.innerHeight / 5 * 4 - 112 - 50, // fixme: убрать эту дичь и сделать 100%
       dataSource: {
         "chart": {
           "theme": "my"
@@ -139,19 +115,33 @@ export default {
     }
   },
 
-  mounted() {
-    for (let i = 0; i < 12; i++)
-      this.addPointToChart(15000);
-
-    setInterval(() => {
-      if (!this.chart)
-        return;
-
-      this.addPointToChart(20000);
-    }, 1500);
+  async mounted() {
+    this.stocks = await this.getStocks();
+    if (this.stocks.length)
+      this.selectStock(0);
   },
 
   methods: {
+    async getStocks() {
+      const stocks = await this.$store.state.api.getStocks();
+      if (!stocks.ok_) {
+        this.$store.state.popups.error('Не удалось получить акции');
+        return [];
+      }
+
+      return stocks.stocks;
+    },
+
+    async getStats(name) {
+      const stats = await this.$store.state.api.getLineStats(name, '1h', new Date(Date.now() - 86400000));
+      if (!stats.ok_) {
+        this.$store.state.popups.error('Не удалось получить графики');
+        return [];
+      }
+
+      return stats.data;
+    },
+
     formatTime(date) {
       const h = date.getHours();
       const m = date.getMinutes();
@@ -172,10 +162,24 @@ export default {
     },
 
     setChartData(valueArray) {
-      this.dataSource.data = valueArray;
+      this.dataSource.data = [];
+      valueArray.forEach((el) => {
+        this.dataSource.data.push({
+          label: el.date,
+          value: el.value
+        });
+      });
     },
 
+    async selectStock(idx) {
+      this.stocks[this.selectedStockIdx].isSelected = false;
+      this.selectedStockIdx = idx;
+      const stock = this.stocks[this.selectedStockIdx];
+      stock.isSelected = true;
 
+      const data = await this.getStats(stock.name);
+      this.setChartData(data);
+    }
   }
 }
 </script>

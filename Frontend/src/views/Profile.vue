@@ -95,6 +95,7 @@ borderColorInputs = textColor5
       <div class="info-column">
         <div class="title">Personal information</div>
         <div class="inputs">
+          <div><label>Username</label> <input v-model="user.username" type="text"/></div>
           <div><label>First name</label> <input v-model="user.firstName" type="text"/></div>
           <div><label>Last name</label> <input v-model="user.secondName" type="text"/></div>
           <div><label>Email</label> <input v-model="user.email" type="text"/></div>
@@ -111,7 +112,7 @@ borderColorInputs = textColor5
 
 <script>
 import Interface from "./Interface.vue";
-import BluredBG from "./sign_in_up/BluredBG.vue";
+import BluredBG from "../components/BluredBG.vue";
 
 import User from "../models/user";
 
@@ -134,12 +135,16 @@ export default {
   methods: {
     // TODO: Нормальная проверка всех полей
     async __signInAction() {
-      if (this.email.length === 0) {
-        this.errors.email = 'Логин не может быть пустым';
+      if (this.username.length === 0) {
+        this.errors.username = 'Логин не может быть пустым';
         return;
       }
-      if (this.password.length === 0) {
-        this.errors.password = 'Пароль не может быть пустым';
+      if (this.username.firstName === 0) {
+        this.errors.firstName = 'Имя не может быть пустым';
+        return;
+      }
+      if (this.email.length === 0) {
+        this.errors.email = 'Email не может быть пустым';
         return;
       }
 

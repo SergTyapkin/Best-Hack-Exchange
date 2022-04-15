@@ -1,7 +1,7 @@
 <style lang="stylus" scoped>
 @require '../styles/constants.styl'
 
-height = 200px
+height = 20%
 
 .toolbar
   height height

@@ -5,7 +5,6 @@ export default class User extends Model {
     id: '?',
     isLogined: false,
     username: "",
-    login: "",
     password: "",
     email: "",
     firstName: "",
@@ -20,7 +19,7 @@ export default class User extends Model {
     email: "email",
     password: "password",
     firstName: "firstName",
-    secondName: "secondName",
+    secondName: "lastName",
   }
 
   set(data) {

@@ -2,13 +2,18 @@
   <BluredBg></BluredBg>
 
   <form class="form centered-horizontal" novalidate @submit.prevent="signUp">
-    <img class="logo" src="../../res/logo.svg" alt="BH Exchange" />
+    <img class="logo" src="../res/logo.svg" alt="BH Exchange" />
 
     <div class="info-container">
       <div class="title">Create an account</div>
     </div>
 
     <div class="fields-container">
+      <div>
+        <span class="error-text">{{ errors.username }}</span>
+        <input type="text" autocomplete="on" placeholder=" " v-model="user.username">
+        <label>Username</label>
+      </div>
       <div>
         <span class="error-text">{{ errors.firstName }}</span>
         <input type="text" autocomplete="on" placeholder=" " v-model="user.firstName">
@@ -45,8 +50,8 @@
 
 
 <script>
-import BluredBg from './BluredBG.vue'
-import User from "../../models/user";
+import BluredBg from '../components/BluredBG.vue'
+import User from "../models/user";
 
 export default {
   components: {BluredBg},
@@ -63,12 +68,12 @@ export default {
 
   methods: {
     async __signUpAction() {
-      if (this.user.firstName.length === 0) {
-        this.errors.firstName = 'Логин не может быть пустым';
+      if (this.user.username.length === 0) {
+        this.errors.username = 'Логин не может быть пустым';
         return;
       }
-      if (this.user.secondName.length === 0) {
-        this.errors.secondName = 'Логин не может быть пустым';
+      if (this.user.firstName.length === 0) {
+        this.errors.firstName = 'Имя не может быть пустым';
         return;
       }
       if (this.user.password.length === 0) {
@@ -92,9 +97,9 @@ export default {
       if (userInfo.status_ === 409) {
         this.errors.username = 'Такой логин уже занят(';
         this.errors.email = 'Или EMail уже занят... Мы точно не знаем)';
-      } else {
-        this.$store.state.popups.error("Не удалось создать пользователя", 'Произошла неизвестная ошибка!');
+        return;
       }
+      this.$store.state.popups.error("Не удалось создать пользователя", 'Произошла неизвестная ошибка!');
     },
 
     async signUp() {
