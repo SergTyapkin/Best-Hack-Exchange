@@ -80,35 +80,44 @@ borderColorInputs = textColor5
 </style>
 
 <template>
-  <div class="profile-page">
-    <div class="page-name">Your profile</div>
+  <Interface>
+    <BluredBG></BluredBG>
 
-    <div class="photo-column">
-      <div class="photo">
-        <img src="../res/profile_thin.svg" alt="Photo">
+    <div class="profile-page">
+      <div class="page-name">Your profile</div>
+
+      <div class="photo-column">
+        <div class="photo">
+          <img src="../res/profile_thin.svg" alt="Photo">
+        </div>
+      </div>
+
+      <div class="info-column">
+        <div class="title">Personal information</div>
+        <div class="inputs">
+          <div><label>First name</label> <input v-model="user.firstName" type="text"/></div>
+          <div><label>Last name</label> <input v-model="user.secondName" type="text"/></div>
+          <div><label>Email</label> <input v-model="user.email" type="text"/></div>
+          <div><label>Address</label> <input v-model="user.address" type="text"/></div>
+          <div><label>Phone number</label> <input v-model="user.phone" type="text"/></div>
+          <div><label>Date of birth</label> <input v-model="user.birthdate" type="text"/></div>
+          <button @click="changeData">Submit</button>
+        </div>
       </div>
     </div>
-
-    <div class="info-column">
-      <div class="title">Personal information</div>
-      <div class="inputs">
-        <div><label>First name</label> <input v-model="user.firstName" type="text"/></div>
-        <div><label>Last name</label> <input v-model="user.secondName" type="text"/></div>
-        <div><label>Email</label> <input v-model="user.email" type="text"/></div>
-        <div><label>Address</label> <input v-model="user.address" type="text"/></div>
-        <div><label>Phone number</label> <input v-model="user.phone" type="text"/></div>
-        <div><label>Date of birth</label> <input v-model="user.birthdate" type="text"/></div>
-        <button @click="changeData">Submit</button>
-      </div>
-    </div>
-  </div>
+  </Interface>
 </template>
 
 
 <script>
+import Interface from "./Interface.vue";
+import BluredBG from "./sign_in_up/BluredBG.vue";
+
 import User from "../models/user";
 
+
 export default {
+  components: {BluredBG, Interface},
   data() {
     return {
       user: new User(),

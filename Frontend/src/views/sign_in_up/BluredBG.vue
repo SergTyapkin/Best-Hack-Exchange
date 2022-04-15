@@ -1,7 +1,8 @@
 <style lang="stylus" scoped>
 svg
-  position fixed
-  width 1440px
+  position absolute
+  inset 0
+  height 100%
   z-index -1
   left calc((100% - 1440px) / 2)
 </style>

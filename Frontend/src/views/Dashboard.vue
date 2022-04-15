@@ -36,44 +36,66 @@ borderColorInputs = textColor5
     height 400px
 </style>
 
+<style lang="stylus">
+.fusioncharts-container // hide white background
+  svg
+    background-color unset !important
+
+.fusioncharts-container svg > g:nth-of-type(2) // hide FusionCharts logo
+  display none
+  overflow hidden
+
+.fusioncharts-container // graph's grid
+  .raphael-group-25-axisReferenceVisualsBottom
+    > path
+      stroke-linecap round
+</style>
+
 <template>
-  <div class="dashboard-page">
-    <div class="page-name">Dashboard</div>
+  <Interface>
+    <div class="dashboard-page">
+      <BluredBG></BluredBG>
 
-    <div class="stocks-row">
-      <div class="title">STOCKS</div>
-      <div class="stocks">
-        <Stock v-for="stock in stocks"
-            :name="stock.name"
-            :value="stock.value"
-            :is-increase="stock.isIncrease"
-            :percents ="stock.percents"
-            :is-selected ="stock.isSelected"
-        ></Stock>
+      <div class="page-name">Dashboard</div>
+
+      <div class="stocks-row">
+        <div class="title">STOCKS</div>
+        <div class="stocks">
+          <Stock v-for="stock in stocks"
+              :name="stock.name"
+              :value="stock.value"
+              :is-increase="stock.isIncrease"
+              :percents ="stock.percents"
+              :is-selected ="stock.isSelected"
+          ></Stock>
+        </div>
+      </div>
+
+      <div class="graphs-row">
+        <div class="graph-container">
+          <fusioncharts
+              type="line"
+              width="100%"
+              :height="height"
+              dataformat="json"
+              :dataSource="dataSource"
+              :onInitialized="(e) => {this.chart = e.sender}"
+          ></fusioncharts>
+        </div>
       </div>
     </div>
-
-    <div class="graphs-row">
-      <div class="graph-container">
-        <fusioncharts
-            type="line"
-            width="100%"
-            :height="height"
-            dataformat="json"
-            :dataSource="dataSource"
-        ></fusioncharts>
-      </div>
-    </div>
-  </div>
+  </Interface>
 </template>
 
 
 <script>
 import User from "../models/user";
 import Stock from "../components/Stock.vue";
+import BluredBG from "./sign_in_up/BluredBG.vue";
+import Interface from "./Interface.vue";
 
 export default {
-  components: {Stock},
+  components: {Interface, BluredBG, Stock},
 
   data() {
     return {
@@ -104,102 +126,56 @@ export default {
         },
       ],
 
-      height: innerHeight - 382, // fixme: убрать эту дичь и сделать 100%
+
+      height: window.innerHeight - 382, // fixme: убрать эту дичь и сделать 100%
       dataSource: {
         "chart": {
-          "caption": "Total footfall in Bakersfield Central",
-          "subCaption": "Last week",
-          "xAxisName": "Day",
-          "yAxisName": "No. of Visitors",
-          "lineThickness": "2",
-          "theme": "candy"
+          "theme": "my"
         },
         "data": [
-          {
-            "label": "Mon",
-            "value": "15123"
-          },
-          {
-            "label": "Tue",
-            "value": "14233"
-          },
-          {
-            "label": "Wed",
-            "value": "23507"
-          },
-          {
-            "label": "Thu",
-            "value": "9110"
-          },
-          {
-            "label": "Fri",
-            "value": "15529"
-          },
-          {
-            "label": "Sat",
-            "value": "20803"
-          },
-          {
-            "label": "Sun",
-            "value": "19202"
-          }
+          {},
         ],
-        "trendlines": [
-          {
-            "line": [
-              {
-                "startvalue": "18500",
-                "color": "#1aaf5d",
-                "displayvalue": "Average{br}weekly{br}footfall",
-                "valueOnRight": "1",
-                "thickness": "2"
-              }
-            ]
-          }
-        ]
       }
     }
   },
 
   mounted() {
-    this.user.set(this.$store.state.user);
+    for (let i = 0; i < 12; i++)
+      this.addPointToChart(15000);
+
+    setInterval(() => {
+      if (!this.chart)
+        return;
+
+      this.addPointToChart(20000);
+    }, 1500);
   },
 
   methods: {
-    async __signInAction() {
-      if (this.email.length === 0) {
-        this.errors.email = 'Логин не может быть пустым';
-        return;
-      }
-      if (this.password.length === 0) {
-        this.errors.password = 'Пароль не может быть пустым';
-        return;
-      }
-
-      const response = await this.$store.state.api.updateUser(this.user.toNetwork());
-      if (response.ok_) {
-        await this.$store.dispatch('GET_USER');
-        this.$store.state.popups.success('Данные обновлены');
-        return;
-      }
-
-      if (response.status_ === 409) {
-        this.errors.email = 'Такой email уже занят';
-      } else {
-        this.$store.state.popups.error("Не удалось обновить данные", 'Произошла неизвестная ошибка!');
-      }
+    formatTime(date) {
+      const h = date.getHours();
+      const m = date.getMinutes();
+      const s = date.getSeconds();
+      return h % 12 + ':' + m + (h > 12 ? 'PM' : 'AM');
     },
 
-    async changeData() {
-      if (!this.enabled) {
-        return;
+    addPointToChart(value) {
+      const arr = this.dataSource.data;
+
+      if (arr.length > 11) {
+        arr.splice(0, 1);
       }
-      this.enabled = false;
+      arr.push({
+        label: this.formatTime(new Date()),
+        value: value + (Math.random() - 0.5) * 5000
+      });
+    },
 
-      await this.__signInAction();
+    setChartData(valueArray) {
+      this.dataSource.data = valueArray;
+    },
 
-      this.enabled = true;
-    }
+
   }
 }
 </script>

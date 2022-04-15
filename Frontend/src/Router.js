@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import SignIn from "./views/sign_in_up/SignIn.vue";
 import SignUp from "./views/sign_in_up/SignUp.vue";
-import Main from "./views/Main.vue";
+import Profile from "./views/Profile.vue";
+import Dashboard from "./views/Dashboard.vue";
 import Page404 from './views/Page404.vue';
 
 export default function createVueRouter(Store) {
@@ -10,8 +11,8 @@ export default function createVueRouter(Store) {
         {path: '/', redirect: '/profile'},
         {path: '/signin', component: SignIn, meta: {noLoginRequired: true}},
         {path: '/signup', component: SignUp, meta: {noLoginRequired: true}},
-        {path: '/profile', component: Main, meta: {loginRequired: false}},
-        {path: '/dashboard', component: Main},
+        {path: '/profile', component: Profile, meta: {loginRequired: false}},
+        {path: '/dashboard', component: Dashboard},
         {path: '/:pathMatch(.*)*', component: Page404},
     ];
     const loginRedirect = '/signin';
@@ -22,6 +23,7 @@ export default function createVueRouter(Store) {
         routes: routes,
     });
 
+    // Handlers for "meta: isLoginRequired"
     let router_got_user = false;
     Router.beforeEach(async (to, from, next) => {
         if (!router_got_user) {
@@ -48,6 +50,7 @@ export default function createVueRouter(Store) {
                 params: {nextUrl: to.fullPath}
             });
         }
+
         next();
     });
 
