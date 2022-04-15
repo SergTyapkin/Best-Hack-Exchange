@@ -1,0 +1,112 @@
+@require 'constants.styl'
+
+border-radius = radiusXL
+bg = mix(bgColor, transparent, 75%)
+submit-bg = bgColor3
+
+textColorPrimary = textColor1
+textColorSecondary = textColor3
+textColorHints = textColor4
+
+max-form-width = 430px
+min-form-height = 600px
+
+border-color = textColor5
+
+.form
+    margin 100px auto
+    padding 50px 40px 30px 40px
+    box-sizing border-box
+    width 100%
+    max-width max-form-width
+    border-radius border-radius
+    background bg
+    border 1px solid border-color
+    text-align center
+    box-shadow 0 0 25px shadowDarkColor1
+
+    .info-container
+        text-align left
+        margin 20px auto 30px auto
+        .title
+            font-weight bold
+
+    .fields-container
+        > div
+            text-align left
+            margin 35px 0
+            > label
+                font-family Arial, monospace
+            > textarea,
+            > input[type=text]
+            > input[type=password],
+            > input[type=email],
+                display block
+                width 100%
+            .info
+                margin 5px 0
+            .error-text
+                color indianred
+                font-size 14px
+
+    .submit-container
+        margin-top 50px
+        .info
+            margin-top 15px
+
+    .info
+        color textColorSecondary
+        font-size 13px
+        letter-spacing 0.5px
+
+
+    // Floating placeholders
+    input
+        all unset
+        width 100%
+        padding 4px 10px
+        color textColor1
+        border-bottom 1px solid border-color
+        box-sizing border-box
+        transition all 0.2s
+        font-size 16px
+    .fields-container
+        > div
+            position relative
+            input + label
+                position absolute
+                bottom 4px
+                left 8px
+                transition all 0.2s ease
+                color textColorHints
+                font-size 16px
+                pointer-events none
+            input:focus + label
+            input:not(:placeholder-shown) + label
+                bottom 30px
+                left 4px
+                font-size 14px
+    //------------------------
+
+    input[type=button]
+    input[type=submit]
+        background submit-bg
+        width 80%
+        padding 15px
+        text-align center
+        cursor pointer
+        border-radius radiusS
+    input[type=button]:hover
+    input[type=submit]:hover
+        box-shadow shadowColor2
+
+    textarea:focus
+    input[type=text]:focus
+    input[type=email]:focus
+    input[type=password]:focus
+        border-color textColor2
+
+@media ({mobile})
+    .form
+        padding-left 20px
+        padding-right 20px
