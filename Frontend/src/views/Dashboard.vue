@@ -31,6 +31,7 @@ borderColorInputs = textColor5
 .graphs-row
   flex 1
   margin-top 30px
+  height 400px
   .graph-container
     height 400px
 </style>
@@ -57,7 +58,7 @@ borderColorInputs = textColor5
         <fusioncharts
             type="line"
             width="100%"
-            height="60%"
+            :height="height"
             dataformat="json"
             :dataSource="dataSource"
         ></fusioncharts>
@@ -103,6 +104,7 @@ export default {
         },
       ],
 
+      height: innerHeight - 382, // fixme: убрать эту дичь и сделать 100%
       dataSource: {
         "chart": {
           "caption": "Total footfall in Bakersfield Central",
