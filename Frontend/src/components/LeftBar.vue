@@ -2,7 +2,7 @@
 @require '../styles/constants.styl'
 
 width = 65px
-height = 80%
+height = 95%
 borderColor = textColor5
 
 .leftbar

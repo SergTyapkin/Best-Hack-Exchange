@@ -13,6 +13,8 @@ borderColorInputs = textColor5
   padding-right 80px
   padding-bottom 20px
   margin-left 80px
+  height 100%
+  box-sizing border-box
 
 .page-name
   position absolute
@@ -25,6 +27,12 @@ borderColorInputs = textColor5
     line-height 40px
   .stocks
     display flex
+
+.graphs-row
+  flex 1
+  margin-top 30px
+  .graph-container
+    height 400px
 </style>
 
 <template>
@@ -45,7 +53,15 @@ borderColorInputs = textColor5
     </div>
 
     <div class="graphs-row">
-
+      <div class="graph-container">
+        <fusioncharts
+            type="line"
+            width="100%"
+            height="60%"
+            dataformat="json"
+            :dataSource="dataSource"
+        ></fusioncharts>
+      </div>
     </div>
   </div>
 </template>
@@ -85,7 +101,61 @@ export default {
           isIncrease: true,
           percents: 39.69,
         },
-      ]
+      ],
+
+      dataSource: {
+        "chart": {
+          "caption": "Total footfall in Bakersfield Central",
+          "subCaption": "Last week",
+          "xAxisName": "Day",
+          "yAxisName": "No. of Visitors",
+          "lineThickness": "2",
+          "theme": "candy"
+        },
+        "data": [
+          {
+            "label": "Mon",
+            "value": "15123"
+          },
+          {
+            "label": "Tue",
+            "value": "14233"
+          },
+          {
+            "label": "Wed",
+            "value": "23507"
+          },
+          {
+            "label": "Thu",
+            "value": "9110"
+          },
+          {
+            "label": "Fri",
+            "value": "15529"
+          },
+          {
+            "label": "Sat",
+            "value": "20803"
+          },
+          {
+            "label": "Sun",
+            "value": "19202"
+          }
+        ],
+        "trendlines": [
+          {
+            "line": [
+              {
+                "startvalue": "18500",
+                "color": "#1aaf5d",
+                "displayvalue": "Average{br}weekly{br}footfall",
+                "valueOnRight": "1",
+                "thickness": "2"
+              }
+            ]
+          }
+        ]
+      }
     }
   },
 
