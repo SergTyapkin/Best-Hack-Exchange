@@ -11,8 +11,8 @@ export default function createVueRouter(Store) {
         {path: '/', redirect: '/profile'},
         {path: '/signin', component: SignIn, meta: {noLoginRequired: true}},
         {path: '/signup', component: SignUp, meta: {noLoginRequired: true}},
-        {path: '/profile', component: Profile, meta: {loginRequired: false}},
-        {path: '/dashboard', component: Dashboard},
+        {path: '/profile', component: Profile, meta: {loginRequired: true}},
+        {path: '/dashboard', component: Dashboard, meta: {loginRequired: true}},
         {path: '/:pathMatch(.*)*', component: Page404},
     ];
     const loginRedirect = '/signin';
