@@ -15,7 +15,7 @@ RUN pip install --upgrade pip
 RUN pip install poetry
 RUN poetry config virtualenvs.create false
 
-COPY .env pyproject.toml poetry.lock /code
+COPY .env pyproject.toml poetry.lock alembic.ini /code
 RUN poetry install --no-dev
 
 COPY src /code/src
