@@ -119,6 +119,12 @@ export default {
     this.stocks = await this.getStocks();
     if (this.stocks.length)
       this.selectStock(0);
+
+    setInterval(() => {
+      if (!this.chart)
+        return;
+      this.addPointToChart(20000);
+    }, 1500);
   },
 
   methods: {

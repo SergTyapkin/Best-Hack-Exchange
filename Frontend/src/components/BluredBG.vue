@@ -3,8 +3,9 @@ svg
   position absolute
   inset 0
   height 100%
+  width 100%
   z-index -1
-  left calc((100% - 1440px) / 2)
+  //left calc((100% - 1440px) / 2)
 </style>
 
 <template>
